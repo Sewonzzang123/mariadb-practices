@@ -1,0 +1,6 @@
+replace
+		name="" >> "set name = "+name+" ";
+binding(값을 binding해서 넘겨줘야 한다)
+	preparestatement
+		>>name= "" >>> set name=?
+	1. sql 2.binding 3.execute
