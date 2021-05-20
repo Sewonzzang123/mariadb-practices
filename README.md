@@ -1,0 +1,2 @@
+# mariadb-practices
+jdbc study
