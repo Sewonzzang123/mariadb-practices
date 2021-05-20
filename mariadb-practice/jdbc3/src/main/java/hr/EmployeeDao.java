@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDao {
+	//공통되는 부분 connection을 분리하였음.
 	private Connection getConnection() {
 		Connection conn = null;
 		try {

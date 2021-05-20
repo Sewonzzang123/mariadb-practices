@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UpdateTest02 {
-
+	//preparedStatement
 	public static void main(String[] args) {
 		DeptVo vo = new DeptVo();
 		vo.setNo(4L);

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DeleteTest02 {
-
+	//preparedStatement
 	public static void main(String[] args) {
 		Boolean result = delete(11L);
 		System.out.println(result ? "성공":"실패");

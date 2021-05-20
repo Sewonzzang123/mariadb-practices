@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InsertTest02 {
-
+	//preparedStatement
 	public static void main(String[] args) {
 		insertDepartment("영업");
 		insertDepartment("개발");
