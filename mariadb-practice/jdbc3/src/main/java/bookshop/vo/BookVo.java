@@ -1,5 +1,7 @@
 package bookshop.vo;
 
+import java.util.List;
+
 public class BookVo {
 	private Long no;
 	private String title;
@@ -42,4 +44,5 @@ public class BookVo {
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
+
 }

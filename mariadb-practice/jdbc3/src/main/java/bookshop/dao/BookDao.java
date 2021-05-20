@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookshop.vo.AuthorVo;
+import bookshop.vo.BookVo;
 
-public class AuthorDao {
+public class BookDao {
 	
 	private Connection getConnection() {
 		Connection conn = null;
@@ -28,8 +29,8 @@ public class AuthorDao {
 
 		return conn;
 	}
-	
-	public boolean insert(AuthorVo vo) {
+
+	public boolean insert(BookVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
@@ -37,11 +38,14 @@ public class AuthorDao {
 		try {
 			conn = getConnection();
 
-			String sql = "insert into author values(null,?)";
+			String sql = "insert into book " +
+						" values(null,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, vo.getName());
-			
+						
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getStatus());
+			pstmt.setLong(3, vo.getAuthorNo());
+	
 			int count = pstmt.executeUpdate();
 			result = count == 1;
 
@@ -64,11 +68,8 @@ public class AuthorDao {
 		return result;
 	}
 
-
-
-	public List<AuthorVo> findAll() {
-		List<AuthorVo> result = new ArrayList<>();
-		
+	public List<BookVo> findAll() {
+		List<BookVo> result = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -76,19 +77,25 @@ public class AuthorDao {
 		try {
 			conn = getConnection();
 
-			String sql = "select no, name from author";
+			String sql = "select t2.no, t2.title, t2.status, t1.name "
+						+ "from author t1, book t2 "
+						+ "where t1.no = t2.author_no ";
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				Long no = rs.getLong(1);
-				String name = rs.getString(2);
+				String title = rs.getString(2);
+				String status = rs.getString(3);
+				String name = rs.getString(4);
 				
-				AuthorVo vo = new AuthorVo();
+				BookVo vo = new BookVo();
 				vo.setNo(no);
-				vo.setName(name);
-				
+				vo.setTitle(title);
+				vo.setStatus(status);
+				vo.setAuthorName(name);
+			
 				result.add(vo);
 			}
 
@@ -110,4 +117,31 @@ public class AuthorDao {
 		}
 		return result;
 	}
+
+	public boolean update(Long bookNo, String status) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+			String sql = "update book "
+					+ "set status =? "
+					+ "where no =? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, status);
+			pstmt.setLong(2, bookNo);
+			
+			int count = pstmt.executeUpdate();
+			result = count ==1;
+			
+		}catch(SQLException e) {
+			System.out.println("error: "+e);
+		}
+		
+		return result;
+	}
+	
+	
 }

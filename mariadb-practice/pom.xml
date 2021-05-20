@@ -7,6 +7,7 @@
   <modules>
   	<module>jdbc</module>
   	<module>jdbc3</module>
+  	<module>jdbc-homework</module>
   </modules>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
