@@ -2,13 +2,14 @@ package test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DeleteTest02 {
 
 	public static void main(String[] args) {
-		Boolean result = delete(6L);
+		Boolean result = delete(11L);
 		System.out.println(result ? "성공":"실패");
 	}
 		
@@ -16,7 +17,7 @@ public class DeleteTest02 {
 	
 	public static boolean delete(Long no) {	
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		boolean result = false;
 		try {
 			// maven-dependencies에 없을 경우 classNotFound
@@ -29,12 +30,13 @@ public class DeleteTest02 {
 			conn = DriverManager.getConnection(url, id, password);
 
 			// Statement 생성
-			stmt = conn.createStatement();
+			String sql = "delete from dept where no=?";
+			pstmt = conn.prepareStatement(sql);
 			
 			//sql문을 실행
-			String sql = "delete from dept where no="+no;
+			pstmt.setLong(1, no);
 			
-			int count = stmt.executeUpdate(sql);			
+			int count = pstmt.executeUpdate();			
 			result = (count == 1);
 		
 		} catch (ClassNotFoundException e) {
@@ -44,8 +46,8 @@ public class DeleteTest02 {
 		} finally {
 			try {
 
-				if (stmt != null) {
-					stmt.close();
+				if (pstmt != null) {
+					pstmt.close();
 				}
 
 				if (conn != null) {
