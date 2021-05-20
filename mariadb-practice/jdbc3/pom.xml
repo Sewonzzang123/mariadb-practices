@@ -5,8 +5,8 @@
     <artifactId>mariadb-practice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>jdbc</artifactId>
-    	<dependencies>
+  <artifactId>jdbc-practices</artifactId>
+      	<dependencies>
 		<!-- mariaDB JDBC Driver -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
