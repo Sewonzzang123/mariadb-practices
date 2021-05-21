@@ -97,10 +97,11 @@ public class BookMall {
 		CartVo cartVo = new CartVo();
 		boolean result = false;
 		
+		
+		cartVo = new CartVo();
 		cartVo.setBookNo("3");
 		cartVo.setStock(2);
-		cartVo.setMemberNo("4");
-		
+		cartVo.setMemberNo("4");		
 		//동일내용이 있으면 update로 수량 변경
 		result = insertOrUpdateCart(cartVo);
 		if(result == true) {
@@ -109,19 +110,17 @@ public class BookMall {
 			cartDao.insert(cartVo);
 		}
 		
+		cartVo = new CartVo();
 		cartVo.setBookNo("1");
 		cartVo.setStock(6);
-		cartVo.setMemberNo("4");
-		
-		//동일내용이 있으면 update로 수량 변경
+		cartVo.setMemberNo("4");		
 		result = insertOrUpdateCart(cartVo);
 		if(result == true) {
 			cartDao.update(cartVo);
 		}else {
 			cartDao.insert(cartVo);
 		}
-		
-	
+			
 		cartVo = new CartVo();
 		cartVo.setBookNo("6");
 		cartVo.setStock(3);
@@ -146,34 +145,41 @@ public class BookMall {
 		System.out.println("4번이 카트의 책을 전체 주문");
 		OrderDao orderDao = new OrderDao();
 		OrderVo orderVo = new OrderVo();
-		orderVo.setAddress("테스트 집주소");
-		orderVo.setMemberNo("4");
-		orderVo.setPrice(20000);
-		orderDao.insertOrder(orderVo);
-		
-//		카트 선택한 책들이 order_book으로 이동
-		OrderBookVo orderBookVo = new OrderBookVo();
-		orderBookVo.setBookNo("1");
-		orderBookVo.setCount(6);
-		orderBookVo.setOrderNo("13");
-		orderDao.insertOrderBook(orderBookVo);
-		
-		orderBookVo = new OrderBookVo();
-		orderBookVo.setBookNo("6");
-		orderBookVo.setCount(3);
-		orderBookVo.setOrderNo("13");
-		orderDao.insertOrderBook(orderBookVo);
-		
+//		orderVo.setAddress("테스트 집주소");
+//		orderVo.setMemberNo("4");
+//		orderVo.setPrice(20000);
+//		orderDao.insertOrder(orderVo);
+//		
+////		카트 선택한 책들이 order_book으로 이동
+//		OrderBookVo orderBookVo = new OrderBookVo();
+//		orderBookVo.setBookNo("1");
+//		orderBookVo.setCount(6);
+//		orderBookVo.setOrderNo("13");
+//		orderDao.insertOrderBook(orderBookVo);
+//		
+//		orderBookVo = new OrderBookVo();
+//		orderBookVo.setBookNo("6");
+//		orderBookVo.setCount(3);
+//		orderBookVo.setOrderNo("13");
+//		orderDao.insertOrderBook(orderBookVo);
+		System.out.println("=======================");
+		List<OrderVo> orderList = null;
+		System.out.println("전체 주문 내역");
+		orderList = new OrderDao().displayAllOrder();
+		for(OrderVo vo : orderList) {
+			System.out.println(vo.toString());
+		}
+		System.out.println("=======================");
 		System.out.println("4번 주문 내역");
 		Long orderNo = null;
-		List<OrderVo> orderList = orderDao.displayMemberOrder(4L);
+		orderList = orderDao.displayMemberOrder(4L);
 		
 		for(OrderVo vo : orderList) {
 			System.out.println(vo.toString());
 			orderNo = vo.getNo();
 		}
-		
-		System.out.println("주문내역에 따른 주문도서 내역");
+		System.out.println("=======================");
+		System.out.println("주문내역에 따른 주문도서 내역 13번");
 		List<OrderBookVo> orderBookList = orderDao.findOrderBook(13L);
 		for(OrderBookVo vo: orderBookList) {
 			System.out.println(vo.toString());
@@ -183,7 +189,7 @@ public class BookMall {
 		for(CartVo vo:cartList) {
 			new OrderDao().deleteCart(vo);
 		}
-		
+		System.out.println("=======================");
 		System.out.println("회원번호가 4번인 회원의 카트 조회");
 		cartList = new CartDao().findCart(4L);
 		for(CartVo vo: cartList) {
