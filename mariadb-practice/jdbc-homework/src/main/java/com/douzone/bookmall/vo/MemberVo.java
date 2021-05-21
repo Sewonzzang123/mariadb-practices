@@ -1,4 +1,4 @@
-package book_mall_application.vo;
+package com.douzone.bookmall.vo;
 
 public class MemberVo {
 	private Long no;
@@ -31,7 +31,7 @@ public class MemberVo {
 	}
 	@Override
 	public String toString() {
-		return "MemberVo [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+		return "회원 번호=" + no + ", 이름=" + name + ", 이메일=" + email + ", 비밀번호=" + password;
 	}
 	
 }

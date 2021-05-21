@@ -1,9 +1,9 @@
-package book_mall_application.test;
+package com.douzone.bookmall.test;
 
 import java.util.List;
 
-import book_mall_application.dao.MemberDao;
-import book_mall_application.vo.MemberVo;
+import com.douzone.bookmall.dao.MemberDao;
+import com.douzone.bookmall.vo.MemberVo;
 
 public class MemberDaoTest {
 	public static void main(String[] args) {

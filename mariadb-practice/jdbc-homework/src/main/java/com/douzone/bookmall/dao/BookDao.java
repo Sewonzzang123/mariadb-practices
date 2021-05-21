@@ -1,4 +1,4 @@
-package book_mall_application.dao;
+package com.douzone.bookmall.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import book_mall_application.vo.BookVo;
+import com.douzone.bookmall.vo.BookVo;
 
 public class BookDao {
 	private Connection getConnection() {
@@ -69,8 +69,8 @@ public class BookDao {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			String sql = " select no,title,price,category_no "
-					+	" from book ";
+			String sql = " select t1.no,t1.title,t1.price,t1.category_no,t2.name "
+					+	" from book t1, category t2 where t1.category_no =t2.no ";
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
@@ -80,14 +80,14 @@ public class BookDao {
 				String title = rs.getString(2);
 				int price = rs.getInt(3);
 				String categoryNo = rs.getString(4);
-				
+				String categoryName = rs.getString(5);
 			
 				BookVo vo = new BookVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setPrice(price);
 				vo.setCategoryNo(categoryNo);	
-				
+				vo.setCategoryName(categoryName);
 				result.add(vo);
 			}
 		}catch(SQLException e) {

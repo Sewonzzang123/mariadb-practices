@@ -1,9 +1,9 @@
-package book_mall_application.test;
+package com.douzone.bookmall.test;
 
 import java.util.List;
 
-import book_mall_application.dao.CategoryDao;
-import book_mall_application.vo.CategoryVo;
+import com.douzone.bookmall.dao.CategoryDao;
+import com.douzone.bookmall.vo.CategoryVo;
 
 public class CategoryDaoTest {
 

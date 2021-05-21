@@ -1,18 +1,18 @@
-package book_mall_application.vo;
+package com.douzone.bookmall.vo;
 
 public class CartVo {
-	private Long no;
 	private int stock;
 	private int price;
 	private String bookNo;
 	private String MemberNo;
+	private String bookTitle;
 	
 
-	public Long getNo() {
-		return no;
+	public String getBookTitle() {
+		return bookTitle;
 	}
-	public void setNo(Long no) {
-		this.no = no;
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
 	}
 	public int getStock() {
 		return stock;
@@ -38,11 +38,11 @@ public class CartVo {
 	public void setMemberNo(String memberNo) {
 		MemberNo = memberNo;
 	}
-	
 	@Override
 	public String toString() {
-		return "CartVo [no=" + no + ", stock=" + stock + ", price=" + price + ", bookNo=" + bookNo + ", MemberNo="
-				+ MemberNo + "]";
+		return "책이름="+bookTitle+", 수량="+stock+", 가격="+price;
 	}
+	
+
 	
 }

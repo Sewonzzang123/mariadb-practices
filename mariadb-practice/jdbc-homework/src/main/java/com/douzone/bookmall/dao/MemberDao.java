@@ -1,4 +1,4 @@
-package book_mall_application.dao;
+package com.douzone.bookmall.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,10 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import book_mall_application.vo.CategoryVo;
+import com.douzone.bookmall.vo.MemberVo;
 
-public class CategoryDao {
-
+public class MemberDao {
 	private Connection getConnection() {
 		Connection conn = null;
 		try {
@@ -29,7 +28,7 @@ public class CategoryDao {
 		return conn;
 	}
 
-	public boolean insert(CategoryVo vo) {
+	public boolean insert(MemberVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
@@ -37,10 +36,12 @@ public class CategoryDao {
 		try {
 			conn = getConnection();
 
-			String sql = "insert into category values(null, ?)";
+			String sql = "insert into member values(null, ?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getPassword());
 
 			int count = pstmt.executeUpdate();
 			result = count == 1;
@@ -61,32 +62,37 @@ public class CategoryDao {
 		return result;
 	}
 
-	public List<CategoryVo> findAll() {
-		List<CategoryVo> result = new ArrayList<>();
+	public List<MemberVo> findAll() {
+		List<MemberVo> result = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			
-			String sql = "select no,name from category ";
+			String sql = " select no,name,email,password "
+					+	" from member ";
 			pstmt = conn.prepareStatement(sql);
-
+			
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+		
+			while(rs.next()) {
 				Long no = rs.getLong(1);
 				String name = rs.getString(2);
+				String email = rs.getString(3);
+				String password = rs.getString(4);
 				
-				CategoryVo vo = new CategoryVo();
+			
+				MemberVo vo = new MemberVo();
 				vo.setNo(no);
 				vo.setName(name);
+				vo.setEmail(email);
+				vo.setPassword(password);
+				
 				result.add(vo);
 			}
-			
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		} finally {
+		}catch(SQLException e) {
+			System.out.println("error: "+e);
+		}finally {
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -98,8 +104,6 @@ public class CategoryDao {
 				System.out.println("error: " + e);
 			}
 		}
-		
 		return result;
 	}
-
 }

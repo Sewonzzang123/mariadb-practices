@@ -1,14 +1,14 @@
-package book_mall_application.test;
+package com.douzone.bookmall.test;
 
 import java.util.List;
 
-import book_mall_application.dao.BookDao;
-import book_mall_application.vo.BookVo;
+import com.douzone.bookmall.dao.BookDao;
+import com.douzone.bookmall.vo.BookVo;
 
 public class BookDaoTest {
 
 	public static void main(String[] args) {
-		insertBooks();
+//		insertBooks();
 		displayAllBook();
 	}
 
