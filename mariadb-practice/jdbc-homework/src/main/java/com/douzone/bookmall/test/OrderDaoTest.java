@@ -15,8 +15,19 @@ public class OrderDaoTest {
 //		displayAllOrder();
 //		displayMemberOrder(4L);
 //		insertOrderBook();
-		findOrderCart();
+//		findOrderCart();
 //		deleteCart(); //findOrderCart안에 넣었음.
+		displayTodayOrder();
+	}
+
+
+	private static void displayTodayOrder() {
+		List<OrderVo> orderList = new OrderDao().displayTodayOrder("20210521");
+		Long orderNo = null;
+		for(OrderVo vo : orderList) {
+			System.out.println(vo.toString());
+			orderNo = vo.getNo();
+		}
 	}
 
 

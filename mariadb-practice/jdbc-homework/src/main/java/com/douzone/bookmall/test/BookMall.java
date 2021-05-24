@@ -195,7 +195,12 @@ public class BookMall {
 		for(CartVo vo: cartList) {
 			System.out.println(vo.toString());
 		}
-		
+		System.out.println("=======================");
+		System.out.println("2021년05월21일 주문 목록");
+		orderList = new OrderDao().displayTodayOrder("20210521");
+		for(OrderVo vo : orderList) {
+			System.out.println(vo.toString());
+		}
 	}
 	
 	public static boolean insertOrUpdateCart(CartVo cartVo) {

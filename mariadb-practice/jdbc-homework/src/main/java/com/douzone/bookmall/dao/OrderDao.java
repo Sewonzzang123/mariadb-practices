@@ -339,4 +339,57 @@ public class OrderDao {
 		return result;
 	}
 
+	public List<OrderVo> displayTodayOrder(String today) {
+		List<OrderVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = "  select t1.no, t1.address, t1.member_no, t1.price, t1.order_no, t2.name, t2.email"
+						+ " from book_order t1,member t2 "
+						+ " where t1.member_no = t2.no "
+						+ " and order_no like ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, today+"%");
+			rs = pstmt.executeQuery();
+		
+			while(rs.next()) {
+				Long no = rs.getLong(1);
+				String address = rs.getString(2);
+				String memberNo = rs.getString(3);
+				int price = rs.getInt(4);
+				String orderNo = rs.getString(5);
+				String memberName = rs.getString(6);
+				String email = rs.getString(7);
+				
+			
+				OrderVo vo = new OrderVo();
+				vo.setNo(no);
+				vo.setAddress(address);
+				vo.setMemberNo(memberNo);
+				vo.setPrice(price);
+				vo.setOrderNo(orderNo);
+				vo.setName(memberName);
+				vo.setEmail(email);
+				
+				result.add(vo);
+			}
+		}catch(SQLException e) {
+			System.out.println("error: "+e);
+		}finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+	}
+
 }
