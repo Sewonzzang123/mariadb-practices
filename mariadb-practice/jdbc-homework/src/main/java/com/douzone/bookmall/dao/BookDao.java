@@ -70,29 +70,29 @@ public class BookDao {
 		try {
 			conn = getConnection();
 			String sql = " select t1.no,t1.title,t1.price,t1.category_no,t2.name "
-					+	" from book t1, category t2 where t1.category_no =t2.no ";
+					+ " from book t1, category t2 where t1.category_no =t2.no ";
 			pstmt = conn.prepareStatement(sql);
-			
+
 			rs = pstmt.executeQuery();
-		
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Long no = rs.getLong(1);
 				String title = rs.getString(2);
 				int price = rs.getInt(3);
 				String categoryNo = rs.getString(4);
 				String categoryName = rs.getString(5);
-			
+
 				BookVo vo = new BookVo();
 				vo.setNo(no);
 				vo.setTitle(title);
 				vo.setPrice(price);
-				vo.setCategoryNo(categoryNo);	
+				vo.setCategoryNo(categoryNo);
 				vo.setCategoryName(categoryName);
 				result.add(vo);
 			}
-		}catch(SQLException e) {
-			System.out.println("error: "+e);
-		}finally {
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -105,5 +105,78 @@ public class BookDao {
 			}
 		}
 		return result;
+	}
+
+	public boolean updateBook(BookVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "update book "
+					+ "set title=?  "
+					+ ", price=?  "
+					+ ", category_no=? "
+					+ "where no=? ";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setInt(2, vo.getPrice());
+			pstmt.setString(3, vo.getCategoryNo());
+			pstmt.setLong(4, vo.getNo());
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+	}
+
+	public boolean deleteBook(long no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "delete from book "
+					+ "where no=? ";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, no);
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+		
 	}
 }

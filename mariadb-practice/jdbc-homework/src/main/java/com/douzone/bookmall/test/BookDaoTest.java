@@ -9,7 +9,24 @@ public class BookDaoTest {
 
 	public static void main(String[] args) {
 //		insertBooks();
-		displayAllBook();
+//		displayAllBook();
+//		updateBook();
+		deleteBook();
+	}
+
+	private static void deleteBook() {
+		new BookDao().deleteBook(13L);
+		
+	}
+
+	private static void updateBook() {
+		BookVo vo = new BookVo();
+		vo.setNo(1L);
+		vo.setTitle("달러구트 꿈 백화점");
+		vo.setPrice(13800);
+		vo.setCategoryNo("1");
+		new BookDao().updateBook(vo);
+		
 	}
 
 	private static void displayAllBook() {
