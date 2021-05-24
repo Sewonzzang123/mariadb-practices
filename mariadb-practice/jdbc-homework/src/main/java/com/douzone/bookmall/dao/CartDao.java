@@ -169,4 +169,38 @@ public class CartDao {
 		return result;
 		
 	}
+
+	public boolean deleteCart(CartVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+			String sql = "delete from cart where member_no=? and book_no=? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, vo.getMemberNo());			
+			pstmt.setString(2, vo.getBookNo());
+		
+			
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+		
+	}
 }

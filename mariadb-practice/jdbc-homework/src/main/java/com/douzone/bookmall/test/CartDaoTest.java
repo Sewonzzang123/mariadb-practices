@@ -9,16 +9,24 @@ public class CartDaoTest {
 
 	public static void main(String[] args) {
 //		insertCart("7",1,"2");
-	
 		//updateCart();
-		boolean result = confirmCart();
-		System.out.println(result);
-		if(result == true) {
-			updateCart("1",5,"4");
-		}else {
-			insertCart("1",5,"4");
-		}
-		displayMyCart(4L);
+		deleteCart();
+		
+//		boolean result = confirmCart();
+//		System.out.println(result);
+//		if(result == true) {
+//			updateCart("1",5,"4");
+//		}else {
+//			insertCart("1",5,"4");
+//		}
+//		displayMyCart(4L);
+	}
+
+	private static void deleteCart() {
+		CartVo cartVo = new CartVo();
+		cartVo.setMemberNo("4");
+		cartVo.setBookNo("3");
+		new CartDao().deleteCart(cartVo);
 	}
 
 	private static boolean confirmCart() {
