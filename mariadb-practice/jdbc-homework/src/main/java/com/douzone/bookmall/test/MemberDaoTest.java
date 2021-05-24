@@ -7,8 +7,30 @@ import com.douzone.bookmall.vo.MemberVo;
 
 public class MemberDaoTest {
 	public static void main(String[] args) {
-		insertMembers();
-		displayAllMember();
+//		insertMembers();
+//		displayAllMember();
+//		updateMember();
+		deleteMember();
+	}
+
+	private static void deleteMember() {
+		MemberVo vo = new MemberVo();
+		vo.setNo(7L);
+		vo.setName("또치");
+		vo.setEmail("ddochi@naver.com");
+		vo.setPassword("ddochi");
+		new MemberDao().delete(vo);
+		
+	}
+
+	private static void updateMember() {
+		MemberVo vo = new MemberVo();
+		vo.setNo(null);
+		vo.setName("고길동");
+		vo.setEmail("gildong123@gmail.com");
+		vo.setPassword("gildong");
+//		new MemberDao().update(vo);
+		
 	}
 
 	private static void displayAllMember() {

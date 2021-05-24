@@ -106,4 +106,40 @@ public class MemberDao {
 		}
 		return result;
 	}
+
+	public boolean delete(MemberVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "delete from member where email=? and password=? and no=? ";
+			pstmt = conn.prepareStatement(sql);
+
+
+			pstmt.setString(1, vo.getEmail());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setLong(3, vo.getNo());
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+		
+	}
 }
