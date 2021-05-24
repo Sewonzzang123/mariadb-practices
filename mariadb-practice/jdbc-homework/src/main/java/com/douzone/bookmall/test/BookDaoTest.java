@@ -11,7 +11,19 @@ public class BookDaoTest {
 //		insertBooks();
 //		displayAllBook();
 //		updateBook();
-		deleteBook();
+//		deleteBook();
+		displayCategoryBook();
+	}
+
+	private static void displayCategoryBook() {
+		
+		
+		List<BookVo> list = new BookDao().findCategoryBook("2");
+		for(BookVo vo : list) {
+			System.out.println(vo.toString());
+		}
+		
+		
 	}
 
 	private static void deleteBook() {

@@ -179,4 +179,51 @@ public class BookDao {
 		return result;
 		
 	}
+
+	public List<BookVo> findCategoryBook(String findNo) {
+		List<BookVo> result = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+			String sql = " select t1.no,t1.title,t1.price,t1.category_no,t2.name "
+					+ " from book t1, category t2 "
+					+ " where t1.category_no =t2.no "
+					+ " and t1.category_no=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, findNo);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				int price = rs.getInt(3);
+				String categoryNo = rs.getString(4);
+				String categoryName = rs.getString(5);
+
+				BookVo vo = new BookVo();
+				vo.setNo(no);
+				vo.setTitle(title);
+				vo.setPrice(price);
+				vo.setCategoryNo(categoryNo);
+				vo.setCategoryName(categoryName);
+				result.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+	}
 }
