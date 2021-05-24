@@ -102,4 +102,73 @@ public class CategoryDao {
 		return result;
 	}
 
+	public boolean update(CategoryVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "update category set name=? where no=? ";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, vo.getName());
+			pstmt.setLong(2, vo.getNo());
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+		
+	}
+
+	public boolean delete(long deleteNo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = getConnection();
+
+			String sql = "delete from category where no=? ";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setLong(1, deleteNo);
+
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		return result;
+		
+	}
+
 }

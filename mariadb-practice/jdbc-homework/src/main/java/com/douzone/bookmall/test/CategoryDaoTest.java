@@ -9,7 +9,22 @@ public class CategoryDaoTest {
 
 	public static void main(String[] args) {
 //		insertCategory();
-		displayAllCategory();
+//		displayAllCategory();
+//		updateCategory();
+		deleteCategory();
+	}
+
+	private static void deleteCategory() {
+		new CategoryDao().delete(8L);
+		
+	}
+
+	private static void updateCategory() {
+		CategoryVo vo = new CategoryVo();
+		vo.setNo(7L);
+		vo.setName("역사");
+		new CategoryDao().update(vo);
+		
 	}
 
 	private static void displayAllCategory() {
